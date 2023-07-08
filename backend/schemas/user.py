@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 
 class User(BaseModel):
     first_name: str
@@ -8,3 +9,7 @@ class User(BaseModel):
     password: str
     created_at: datetime
     updated_at: datetime
+
+class Response(BaseModel):
+    message: Optional[str]
+    jwt: Optional[str]
