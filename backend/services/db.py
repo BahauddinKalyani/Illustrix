@@ -1,14 +1,16 @@
 from mongoengine import connect
+from datetime import datetime
 
 from config.settings import db_settings
 from models.user import User
+from models.image import Image
 
 def connect_mongo_db():
     """Connect to the Database
     """
     connect(db=db_settings.db_name, host=db_settings.db_host, port=db_settings.db_port)
 
-def insert_one(Object : User):
+def insert_one_user(Object : User):
     """Insert One Record in Database
 
     Args:
@@ -45,3 +47,15 @@ def check_user_data(email: str, password: str) -> int:
             return 100
     else:
         return 102
+
+def insert_one_user_image(Object: Image) -> None:
+    Object.save()
+
+def insert_or_update_user_image(file_name: str, email: str, url: str) -> None:
+    images_list = Image.objects(email = email, filename = file_name)
+    if images_list:
+        images_list.update(updated_at = datetime.utcnow())
+    else:
+        image_object = Image(email = email, filename = file_name, url = url)
+        image_object.validate()
+        image_object.save()
