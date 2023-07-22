@@ -13,3 +13,41 @@ class JWT(BaseSettings):
     FMT: str = "%Y-%m-%d %H:%M:%S.%f"
 
 jwt_setting = JWT()
+
+class Constants(BaseSettings):
+    SUCCESS_SIGNUP: str = "Successfully Singed Up!"
+    SUCCESS_LOGIN: str = "Successfully Logged In!"
+    INVALID_LOGIN: str = "Invalid Login!"
+    ERROR: str = "Error Occured. Please Try again leter!"
+    SUCCESSFULLY_PERFORMED: str = "Successfully Performed!"
+
+constants = Constants()
+
+class FileStructure(BaseSettings):
+    SERVER_URL = "http://localhost:8000/"
+    BASE_STRUCTURE: list = ["/upload", "/final", "/background_remove", "/background", "/background_blur", "/combined_image", "/flip_vertically", "/flip_horizontally", "/black_and_white", "/saturation", "/hue", "/contrast", "/brightness", "/sharpness"]
+    USER_DATA: str = "./static/user_data/"
+    STATIC_FOLDER: str = "./static/"
+    MODEL_FOLDER: str = "./services/ml_services/models/"
+    FINAL_IMAGE_PATH: str = "/final"
+    BACKGROUND_REMOVE_PATH: str = "/background_remove/"
+    USER_BACKGROUND_PATH: str = "/background/"
+    USER_BLURRED_BACKGROUND_PATH: str = "/background_blur/"
+    UPLOAD_IMAGE_PATH: str = "/upload"
+    USER_COMBINED_IMAGE_PATH: str = "/combined_image/"
+    FLIP_VERTICAL_PATH: str = "/flip_vertically/"
+    FLIP_HORIZONTAL_PATH: str = "/flip_horizontally/"
+    BLACKA_AND_WHITE_PATH: str = "/black_and_white/"
+    SATURATION_PATH: str = "/saturation/"
+    HUE_PATH: str = "/hue/"
+    CONTRAST_PATH: str = "/contrast/"
+    BRIGHTNESS_PATH: str = "/brightness/"
+    SHARPNESS_PATH: str = "/sharpness/"
+    UPLOAD_PATH: str = "/upload/"
+
+file_structure = FileStructure()
+
+class MLConstants(BaseSettings):
+    BLUR_FACTOR: int = 25
+
+ml_constants = MLConstants()
