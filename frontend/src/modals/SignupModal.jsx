@@ -1,21 +1,30 @@
 import React from 'react';
-import { Button, Modal } from 'antd';
-import { Checkbox, Form, Input } from 'antd';
+import { Button, Modal, Form, Input, message } from 'antd';
+import ApiServiceHelper from '../helpers/ApiServiceHelper';
 
-class SignupModal extends React.Component {
+function SignupModal(props) {
 
-  signup() {
-    this.props.updateSignupModal(false)
-  }
-  render() {
+  const doSignup = async (data) => {
+    try {
+        const response = await ApiServiceHelper.post('user/signup', data); // Replace '/endpoint' with your API endpoint
+        console.log('POST response:', response);
+        props.updateSignupModal(false)
+        props.updateLoginModal(true)
+        message.success('Signup Successful!');
+    } catch (error) {
+      message.error("Something went wrong. Please Try again leter!")
+      props.updateSignupModal(false)
+    }
+  };
+
     return (
     <>
       <Modal
-        title={this.props.title}
+        title={props.title}
         style={{ top: 120 }}
-        open={this.props.signup_modal_open}
+        open={props.signup_modal_open}
         // onOk={() => props.updateState(false)}
-        onCancel={() => this.props.updateSignupModal(false)}
+        onCancel={() => props.updateSignupModal(false)}
         width={500}
         footer={null}
       >
@@ -25,12 +34,12 @@ class SignupModal extends React.Component {
           wrapperCol={{ span: 16 }}
           style={{ maxWidth: 600 }}
           initialValues={{ remember: true }}
-          // onFinish={onFinish}
+          onFinish={doSignup.bind(this)}
           // onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
           <Form.Item
-            name="firstName"
+            name="first_name"
             label="First Name"
             rules={[
               { required: true, message: 'Please enter your first name' },
@@ -39,7 +48,7 @@ class SignupModal extends React.Component {
             <Input />
           </Form.Item>
           <Form.Item
-            name="lastName"
+            name="last_name"
             label="Last Name"
             rules={[
               { required: true, message: 'Please enter your last name' },
@@ -75,7 +84,7 @@ class SignupModal extends React.Component {
         </Form>
       </Modal>
     </>
-  )};
+  )
 };
 
 export default SignupModal;

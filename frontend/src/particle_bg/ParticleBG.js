@@ -1,16 +1,4 @@
-// import Particles from "react-particles";
 import particlesConfig from "./particleBGConfig";
-
-// const options = {
-//           preset: "links",
-//         };
-// function ParticleBG() {
-//     return (
-//         <Particles options={particlesConfig}></Particles> 
-//     );
-// }
-  
-// export default ParticleBG;
 import React from "react";
 import Particles from "react-particles";
 import type { Engine } from "tsparticles-engine";
@@ -24,10 +12,6 @@ export class ParticleBG extends React.PureComponent<IProps> {
   }
 
   render() {
-    const options = {
-      preset: "links",
-    };
-
     return <Particles options={particlesConfig} init={this.customInit} />;
   }
 }

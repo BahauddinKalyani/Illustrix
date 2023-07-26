@@ -12,23 +12,23 @@ const buttonStyle = {
 }
 
 const imageStyle = {
-    margin: '30px 15px',
-    height: '50px',
-    width: '100px',
+    margin: '20px 10px',
+    height: '40px',
+    width: '80px',
 }
 
-function LandingHeader() {
+function InsideHeader() {
     return (
         <Header style={headerStyle}>
             <a href="/"><img style={imageStyle} src='logo-clr-sm.png' alt='logo'></img></a>
             {/* <Button style={buttonStyle} type='deafult'>Sign up</Button> */}
-            <Button style={buttonStyle} type='deafult'>Contact us</Button>
-            <Button style={buttonStyle} type='deafult'>Documents</Button>
-            <Button style={buttonStyle} type='deafult'>Pricing</Button>
-            <Button href="/" style={buttonStyle} type='deafult'>Home</Button>
+            {/* <Button style={buttonStyle} type='deafult'>Contact us</Button>
+            <Button style={buttonStyle} type='deafult'>Documents</Button> */}
+            <Button href="/" style={buttonStyle} type='deafult'>Logout</Button>
+            <Button style={buttonStyle} type='deafult'>Profile</Button>
             {/* <Button style={buttonStyle} type='primary'>Login</Button> */}
         </Header>  
     );
 }
   
-export default LandingHeader;
+export default InsideHeader;
