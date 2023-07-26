@@ -1,21 +1,31 @@
 import React from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Modal, message } from 'antd';
 import { Checkbox, Form, Input } from 'antd';
+import { useNavigate } from "react-router-dom";
+import ApiServiceHelper from '../helpers/ApiServiceHelper';
 
-class LoginModal extends React.Component {
-
-  login() {
-    this.props.updateLoginModal(false)
-  }
-  render() {
-    return (
+function LoginModal(props) {
+    const navigate = useNavigate();
+    const doLogin = async (data) => {
+        try {
+            const response = await ApiServiceHelper.post('user/login', data);
+            console.log(response)
+            props.updateLoginModal(false)
+            navigate('/edit', { state: response });
+            message.success('Login Successful!');
+        } catch (error) {
+            console.log(error)
+            message.error("Something went wrong. Please Try again leter!")
+        }
+    }
+  
+  return (
     <>
       <Modal
-        title={this.props.title}
+        title={props.title}
         style={{ top: 120 }}
-        open={this.props.login_modal_open}
-        // onOk={() => props.updateState(false)}
-        onCancel={() => this.props.updateLoginModal(false)}
+        open={props.login_modal_open}
+        onCancel={() => props.updateLoginModal(false)}
         width={500}
         footer={null}
       >
@@ -25,13 +35,12 @@ class LoginModal extends React.Component {
             wrapperCol={{ span: 16 }}
             style={{ maxWidth: 600 }}
             initialValues={{ remember: true }}
-            // onFinish={onFinish}
-            // onFinishFailed={onFinishFailed}
+            onFinish={doLogin.bind(this)}
             autoComplete="off"
         >
             <Form.Item
                 label="Username"
-                name="username"
+                name="email"
                 rules={[{ required: true, message: 'Please input your username!' }]}
             >
                 <Input />
@@ -50,14 +59,14 @@ class LoginModal extends React.Component {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit" onSubmit={()=> this.login}>
+                <Button type="primary" htmlType="submit">
                     Login
                 </Button>
             </Form.Item>
         </Form>
       </Modal>
     </>
-  )};
+  )
 };
 
 export default LoginModal;

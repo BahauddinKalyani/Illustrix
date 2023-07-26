@@ -12,7 +12,7 @@ const heroImage = 'landing_hero.png'
 
 const contentStyle = {
     textAlign: 'left',
-    minHeight: 768,
+    // minHeight: 768,
     lineHeight: '120px',
     padding: '220px 50px 220px 120px',
   };
@@ -24,12 +24,8 @@ const imageStyle = {
 const rowStyle = {
     textAlign: 'center',
     verticalAlign: 'center',
+    maxheight: '100vh',
 }
-
-
-// const changeHandler = e => {
-//     setAllValues({...allValues, [e.target.name]: e.target.value})
-// }
 
 class LandingMain extends React.Component {
 
@@ -53,8 +49,17 @@ class LandingMain extends React.Component {
         return (
         <Row style={rowStyle}>
             <ParticleBG />
-            <LoginModal login_modal_open={this.state.login_modal_open} title="Login" updateLoginModal={this.updateLoginModal.bind(this)} />
-            <SignupModal signup_modal_open={this.state.signup_modal_open} title="Sign up" updateSignupModal={this.updateSignupModal.bind(this)} />
+            <LoginModal 
+                login_modal_open={this.state.login_modal_open} 
+                title="Login" 
+                updateLoginModal={this.updateLoginModal.bind(this)} 
+            />
+            <SignupModal 
+                signup_modal_open={this.state.signup_modal_open} 
+                title="Sign up" 
+                updateSignupModal={this.updateSignupModal.bind(this)}
+                updateLoginModal={this.updateLoginModal.bind(this)} 
+            />
             <Col span={12}>
                 <Content style={contentStyle}>
                     <Title level={1}>Transform Your Images with <br/>AI - Powered Editing.</Title>
