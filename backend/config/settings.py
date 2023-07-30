@@ -25,7 +25,7 @@ constants = Constants()
 
 class FileStructure(BaseSettings):
     SERVER_URL = "http://localhost:8000/"
-    BASE_STRUCTURE: list = ["/upload", "/final", "/background_remove", "/background", "/background_blur", "/combined_image", "/flip_vertically", "/flip_horizontally", "/black_and_white", "/saturation", "/hue", "/contrast", "/brightness", "/sharpness"]
+    BASE_STRUCTURE: list = ["/upload", "/final", "/background_remove", "/background", "/background_blur", "/combined_image", "/flip_vertically", "/flip_horizontally", "/black_and_white", "/saturation", "/hue", "/contrast", "/brightness", "/sharpness", "/painting", "/sketching", "/cartoonification"]
     USER_DATA: str = "./static/user_data/"
     STATIC_FOLDER: str = "./static/"
     MODEL_FOLDER: str = "./services/ml_services/models/"
@@ -44,10 +44,15 @@ class FileStructure(BaseSettings):
     BRIGHTNESS_PATH: str = "/brightness/"
     SHARPNESS_PATH: str = "/sharpness/"
     UPLOAD_PATH: str = "/upload/"
+    PAINTING_PATH: str = "/painting/"
+    SKETCHING_PATH: str = "/sketching/"
+    CARTOONIFICATION_MODEL: str = "./services/ml_services/models/cartoonification_model"
+    CARTOONNIFICATION_PATH: str = "/cartoonification/"
 
 file_structure = FileStructure()
 
 class MLConstants(BaseSettings):
     BLUR_FACTOR: int = 25
+    SHAPRNESS_FACTOR: int = 2
 
 ml_constants = MLConstants()
