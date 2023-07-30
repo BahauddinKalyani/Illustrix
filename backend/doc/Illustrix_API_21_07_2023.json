@@ -140,7 +140,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"background_url\" : \"http://localhost:8000/static/default_background/bg.png\"\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"background_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/R6KGDUB99N.png\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -489,6 +489,105 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Painting",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "jwt_token",
+								"value": "{{JWT_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/image/painting",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"image",
+								"painting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sketching",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "jwt_token",
+								"value": "{{JWT_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/image/sketching",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"image",
+								"sketching"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cartoonification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "jwt_token",
+								"value": "{{JWT_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/image/cartoonification",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"image",
+								"cartoonification"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -521,7 +620,7 @@
 		},
 		{
 			"key": "JWT_TOKEN",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ikhsb29AZ21haWwuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCIsImV4cGlyYXRpb24iOiIyMDIzLTA3LTIxIDEyOjUzOjE2LjM2NzgxNyJ9.ioMUbhA1X-o8DxwfEruUlY4amuZIzOFX_V5CZ7QMiN4",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ikhsb29AZ21haWwuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCIsImV4cGlyYXRpb24iOiIyMDIzLTA3LTMxIDEyOjI1OjQzLjEyNTk1NiJ9.rMawEQ8eJBDq9UevlAdgwygJzD0Ri3TsIEGlhdvbw7o",
 			"type": "default"
 		}
 	]
