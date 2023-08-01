@@ -34,4 +34,8 @@ def background_remove_fun(file_name: str, system_file_path: str) -> str:
         save_to_sub_folder(bg_remove_path, masked_image)
         save_to_sub_folder(removed_bg_path, original_image)
         save_to_final_folder(system_file_path, masked_image)
+<<<<<<< HEAD
         return system_file_path
+=======
+        return system_file_path
+>>>>>>> 9b56408d3f0a3538b6123906832da578dc0ea8da
