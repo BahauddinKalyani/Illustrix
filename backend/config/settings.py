@@ -48,6 +48,7 @@ class FileStructure(BaseSettings):
     SKETCHING_PATH: str = "/sketching/"
     CARTOONIFICATION_MODEL: str = "./services/ml_services/models/cartoonification_model"
     CARTOONNIFICATION_PATH: str = "/cartoonification/"
+    COPY_FILE_SUFFIX: str = "_copy"
 
 file_structure = FileStructure()
 

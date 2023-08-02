@@ -30,12 +30,15 @@ def background_remove_fun(file_name: str, system_file_path: str) -> str:
         masked_image = original_image * pred_mask
         background_mask = np.concatenate([background_mask, background_mask, background_mask], axis=-1)
         background_mask = background_mask * [0, 0, 0]
-        masked_image = masked_image + background_mask
-        save_to_sub_folder(bg_remove_path, masked_image)
+        #masked_image = masked_image + background_mask
+                
+        gray_image = cv2.cvtColor(masked_image, cv2.COLOR_BGR2GRAY)
+        _, alpha = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY)
+        b, g, r = cv2.split(masked_image)
+        rgba = [b, g, r, alpha]
+        transperant_image = cv2.merge(rgba, 4)
+            
+        save_to_sub_folder(bg_remove_path, transperant_image)
         save_to_sub_folder(removed_bg_path, original_image)
-        save_to_final_folder(system_file_path, masked_image)
-<<<<<<< HEAD
+        save_to_final_folder(system_file_path, transperant_image)
         return system_file_path
-=======
-        return system_file_path
->>>>>>> 9b56408d3f0a3538b6123906832da578dc0ea8da

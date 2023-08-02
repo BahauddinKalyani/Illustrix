@@ -305,7 +305,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\"\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"save\" : 0,\r\n    \"revert\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -338,7 +338,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 1\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 2,\r\n    \"save\" : 0,\r\n    \"revert\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -371,7 +371,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 20\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 20,\r\n    \"save\" : 0,\r\n    \"revert\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -404,7 +404,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 1\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 2,\r\n    \"save\" : 0,\r\n    \"revert\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -437,7 +437,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 2\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 2,\r\n    \"save\" : 0,\r\n    \"revert\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -470,7 +470,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 4\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 10,\r\n    \"save\" : 0,\r\n    \"revert\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -503,7 +503,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 3\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"factor\" : 3,\r\n    \"save\" : 0,\r\n    \"revert\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -536,7 +536,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\"\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"save\" : 0,\r\n    \"revert\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -569,7 +569,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\"\r\n}",
+							"raw": "{\r\n    \"image_url\" : \"http://localhost:8000/static/user_data/Hloo@gmail.com/final/12345.jpg\",\r\n    \"save\" : 0,\r\n    \"revert\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -584,6 +584,39 @@
 							"path": [
 								"image",
 								"cartoonification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Images",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "jwt_token",
+								"value": "{{JWT_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/image/get_user_images",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"image",
+								"get_user_images"
 							]
 						}
 					},
@@ -620,7 +653,7 @@
 		},
 		{
 			"key": "JWT_TOKEN",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ikhsb29AZ21haWwuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCIsImV4cGlyYXRpb24iOiIyMDIzLTA3LTMxIDEyOjI1OjQzLjEyNTk1NiJ9.rMawEQ8eJBDq9UevlAdgwygJzD0Ri3TsIEGlhdvbw7o",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ikhsb29AZ21haWwuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCIsImV4cGlyYXRpb24iOiIyMDIzLTA4LTAyIDAxOjQyOjQ5Ljg2NDUxNCJ9.UTflhWqio--imrAxMQtMfNGbOBEyXIcTUSV_FIoYG9M",
 			"type": "default"
 		}
 	]
