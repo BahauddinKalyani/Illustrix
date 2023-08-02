@@ -20,7 +20,7 @@ from services.ml_services.background_replace import background_replace_fun
 from services.ml_services.painting import painting_fun
 from services.ml_services.sketching import sketching_fun
 from services.ml_services.cartoonification import cartoonification_fun
-from services.ml_services.image_super_resolution import image_super_resolution_fun
+#from services.ml_services.image_super_resolution import image_super_resolution_fun
 from services.file import upload_image
 
 router = APIRouter()
@@ -86,7 +86,7 @@ async def background_blur(request: Request) -> JSONResponse:
         print(validate_jwt_token)
         if validate_jwt_token == 100:
             user_details = get_user_data_by_jwt(jwt_token)
-            file_name, system_file_path, global_url, background_url, factor = get_file_path_from_url(body)
+            file_name, system_file_path, global_url, background_url, factor, save, revert = get_file_path_from_url(body)
             bg_remove_and_blur = self_background_blur_fun(file_name, system_file_path)
             insert_or_update_user_image(file_name = file_name, email = user_details["email"], url = global_url)
             response = Response()
@@ -112,7 +112,7 @@ async def background_replace(request: Request) -> JSONResponse:
         print(validate_jwt_token)
         if validate_jwt_token == 100:
             user_details = get_user_data_by_jwt(jwt_token)
-            file_name, system_file_path, global_url, background_path, factor = get_file_path_from_url(body)
+            file_name, system_file_path, global_url, background_path, factor, save, revert = get_file_path_from_url(body)
             bg_replace = background_replace_fun(file_name, system_file_path, background_path)
             insert_or_update_user_image(file_name = file_name, email = user_details["email"], url = global_url)
             response = Response()
@@ -138,7 +138,7 @@ async def flip_vertically(request: Request) -> JSONResponse:
         print(validate_jwt_token)
         if validate_jwt_token == 100:
             user_details = get_user_data_by_jwt(jwt_token)
-            file_name, system_file_path, global_url, background_path, factor = get_file_path_from_url(body)
+            file_name, system_file_path, global_url, background_path, factor, save, revert = get_file_path_from_url(body)
             fliped_image = flip_vertically_fun(file_name = file_name, system_file_path = system_file_path)
             insert_or_update_user_image(file_name = file_name, email = user_details["email"], url = global_url)
             response = Response()
@@ -164,7 +164,7 @@ async def flip_horizontally(request: Request) -> JSONResponse:
         print(validate_jwt_token)
         if validate_jwt_token == 100:
             user_details = get_user_data_by_jwt(jwt_token)
-            file_name, system_file_path, global_url, background_path, factor = get_file_path_from_url(body)
+            file_name, system_file_path, global_url, background_path, factor, save, revert = get_file_path_from_url(body)
             fliped_image = flip_horizontally_fun(file_name = file_name, system_file_path = system_file_path)
             insert_or_update_user_image(file_name = file_name, email = user_details["email"], url = global_url)
             response = Response()
@@ -425,7 +425,7 @@ async def image_super_resolution(request: Request) -> JSONResponse:
         if validate_jwt_token == 100:
             user_details = get_user_data_by_jwt(jwt_token)
             file_name, system_file_path, global_url, background_path, factor, save, revert = get_file_path_from_url(body)
-            super_resolution_image = image_super_resolution_fun(file_name = file_name, system_file_path = system_file_path)
+            #super_resolution_image = image_super_resolution_fun(file_name = file_name, system_file_path = system_file_path)
             insert_or_update_user_image(file_name = file_name, email = user_details["email"], url = global_url)
             response = Response()
             response.message = constants.SUCCESSFULLY_PERFORMED
