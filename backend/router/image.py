@@ -20,6 +20,7 @@ from services.ml_services.background_replace import background_replace_fun
 from services.ml_services.painting import painting_fun
 from services.ml_services.sketching import sketching_fun
 from services.ml_services.cartoonification import cartoonification_fun
+from services.ml_services.image_super_resolution import image_super_resolution_fun
 from services.file import upload_image
 
 router = APIRouter()
@@ -399,6 +400,32 @@ async def cartoonification(request: Request) -> JSONResponse:
             user_details = get_user_data_by_jwt(jwt_token)
             file_name, system_file_path, global_url, background_path, factor, save, revert = get_file_path_from_url(body)
             cartoonification_image = cartoonification_fun(file_name = file_name, system_file_path = system_file_path, factor = factor, save = save, revert = revert)
+            insert_or_update_user_image(file_name = file_name, email = user_details["email"], url = global_url)
+            response = Response()
+            response.message = constants.SUCCESSFULLY_PERFORMED
+            response.url = global_url
+            return JSONResponse(status_code=status.HTTP_200_OK, content=response.dict(exclude_none=True))
+        elif validate_jwt_token == 101 or validate_jwt_token == 102:
+            response = Response()
+            response.message = constants.INVALID_LOGIN
+            return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content=response.dict(exclude_none=True))
+    except Exception as e:
+        print(e)
+        response = Response()
+        response.message = constants.ERROR
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=response.dict(exclude_none=True))
+
+@router.post("/image_super_resolution")
+async def image_super_resolution(request: Request) -> JSONResponse:
+    try:
+        body = await request.json()
+        jwt_token = get_jwt_token(request)
+        validate_jwt_token = check_jwt_token(jwt_token)
+        print(validate_jwt_token)
+        if validate_jwt_token == 100:
+            user_details = get_user_data_by_jwt(jwt_token)
+            file_name, system_file_path, global_url, background_path, factor, save, revert = get_file_path_from_url(body)
+            super_resolution_image = image_super_resolution_fun(file_name = file_name, system_file_path = system_file_path)
             insert_or_update_user_image(file_name = file_name, email = user_details["email"], url = global_url)
             response = Response()
             response.message = constants.SUCCESSFULLY_PERFORMED

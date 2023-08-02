@@ -25,7 +25,7 @@ constants = Constants()
 
 class FileStructure(BaseSettings):
     SERVER_URL = "http://localhost:8000/"
-    BASE_STRUCTURE: list = ["/upload", "/final", "/background_remove", "/background", "/background_blur", "/combined_image", "/flip_vertically", "/flip_horizontally", "/black_and_white", "/saturation", "/hue", "/contrast", "/brightness", "/sharpness", "/painting", "/sketching", "/cartoonification"]
+    BASE_STRUCTURE: list = ["/upload", "/final", "/background_remove", "/background", "/background_blur", "/combined_image", "/flip_vertically", "/flip_horizontally", "/black_and_white", "/saturation", "/hue", "/contrast", "/brightness", "/sharpness", "/painting", "/sketching", "/cartoonification", "/image_super_resolution"]
     USER_DATA: str = "./static/user_data/"
     STATIC_FOLDER: str = "./static/"
     MODEL_FOLDER: str = "./services/ml_services/models/"
@@ -49,11 +49,14 @@ class FileStructure(BaseSettings):
     CARTOONIFICATION_MODEL: str = "./services/ml_services/models/cartoonification_model"
     CARTOONNIFICATION_PATH: str = "/cartoonification/"
     COPY_FILE_SUFFIX: str = "_copy"
+    IMAGE_SUPER_RESOLUTION_MODEL: str = "./services/ml_services/models/image_super_resolution/rrdn-C4-D3-G64-G064-T10-x2_best-val_generator_PSNR_Y_epoch009.hdf5"
+    IMAGE_SUPER_RESOLUTION_PATH: str = "/image_super_resolution/"
 
 file_structure = FileStructure()
 
 class MLConstants(BaseSettings):
     BLUR_FACTOR: int = 25
     SHAPRNESS_FACTOR: int = 2
+    IMAGE_SUER_RESOLUTION_SCALE: int = 2
 
 ml_constants = MLConstants()
