@@ -3,6 +3,7 @@
 from PIL import Image
 import pilgram
 import numpy as np
+import cv2
 
 from services.file import save_to_final_folder, save_to_sub_folder, create_copy_image, check_copy_file_exist, delete_copy_file, revert_operation
 from config.settings import file_structure
@@ -13,6 +14,7 @@ def saturation_fun(file_name: str, system_file_path: str, factor: int, save: int
     image = Image.open(operation_file_path)
     saturated_image = pilgram.css.saturate(image, factor)
     saturated_image = np.array(saturated_image)
+    saturated_image = cv2.cvtColor(saturated_image, cv2.COLOR_BGR2RGB)
     if operation_file_path == system_file_path:
         create_copy_image(from_path = system_file_path, to_path = saturation_path, file_name = file_name)
     save_to_sub_folder(saturation_path, saturated_image)

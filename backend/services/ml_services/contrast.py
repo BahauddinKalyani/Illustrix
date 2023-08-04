@@ -2,6 +2,7 @@
 # TODO: Change to Opencv
 from PIL import Image, ImageEnhance
 import numpy as np
+import cv2
 
 from services.file import save_to_final_folder, save_to_sub_folder, create_copy_image, check_copy_file_exist, delete_copy_file, revert_operation
 from config.settings import file_structure
@@ -13,6 +14,7 @@ def contrast_fun(file_name: str, system_file_path: str, factor: int, save: int, 
     enhancer = ImageEnhance.Contrast(image)
     contrasted_image = enhancer.enhance(factor)
     contrasted_image = np.array(contrasted_image)
+    contrasted_image = cv2.cvtColor(contrasted_image, cv2.COLOR_BGR2RGB)
     if operation_file_path == system_file_path:
         create_copy_image(from_path = system_file_path, to_path = contrast_path, file_name = file_name)
     save_to_sub_folder(contrast_path, contrasted_image)

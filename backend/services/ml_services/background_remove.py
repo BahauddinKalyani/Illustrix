@@ -8,7 +8,8 @@ from config.settings import file_structure
 
 graph = tf.Graph()
 with graph.as_default():
-    model = tf.keras.models.load_model(file_structure.MODEL_FOLDER + "unet_jun.h5")
+    model = tf.keras.models.load_model(file_structure.MODEL_FOLDER + "unet_jun.h5", compile=False)
+#model = tf.keras.models.load_model(file_structure.MODEL_FOLDER + "unet_jun.h5", compile=False)
 
 def background_remove_fun(file_name: str, system_file_path: str) -> str:
     try:
