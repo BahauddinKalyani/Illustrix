@@ -20,7 +20,7 @@ from services.ml_services.background_replace import background_replace_fun
 from services.ml_services.painting import painting_fun
 from services.ml_services.sketching import sketching_fun
 from services.ml_services.cartoonification import cartoonification_fun
-#from services.ml_services.image_super_resolution import image_super_resolution_fun
+from services.ml_services.image_super_resolution import image_super_resolution_fun
 from services.file import upload_image
 
 router = APIRouter()
@@ -425,7 +425,7 @@ async def image_super_resolution(request: Request) -> JSONResponse:
         if validate_jwt_token == 100:
             user_details = get_user_data_by_jwt(jwt_token)
             file_name, system_file_path, global_url, background_path, factor, save, revert = get_file_path_from_url(body)
-            #super_resolution_image = image_super_resolution_fun(file_name = file_name, system_file_path = system_file_path)
+            super_resolution_image = image_super_resolution_fun(file_name = file_name, system_file_path = system_file_path)
             insert_or_update_user_image(file_name = file_name, email = user_details["email"], url = global_url)
             response = Response()
             response.message = constants.SUCCESSFULLY_PERFORMED

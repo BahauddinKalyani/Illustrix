@@ -14,3 +14,6 @@ class Response(BaseModel):
     message: Optional[str]
     jwt: Optional[str]
     email: Optional[str]
+    password: Optional[str]
+    first_name: Optional[str]
+    last_name: Optional[str]
