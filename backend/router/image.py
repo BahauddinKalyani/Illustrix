@@ -441,7 +441,7 @@ async def image_super_resolution(request: Request) -> JSONResponse:
         response.message = constants.ERROR
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=response.dict(exclude_none=True))
 
-@router.post("/get_user_images")
+@router.get("/get_user_images")
 async def get_user_images(request: Request) -> JSONResponse:
     try:
         jwt_token = get_jwt_token(request)
