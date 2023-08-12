@@ -1,60 +1,83 @@
 import ApiServiceHelper from './ApiServiceHelper';
+import { message } from 'antd';
 
 // const API_BASE_URL = 'http://localhost:8000';
 
 const ApiService = {
 
     replaceBackground: async (props) => {
-        console.log(props)
-        const data = {
-            image_url: props.imageUrl,
-            background_url: props.backgroundImageUrl
+        try {
+            props.updateSpinFlag(true)
+            const data = {
+                image_url: props.imageUrl,
+                background_url: props.backgroundImageUrl
+            }
+            const header = {
+                jwt_token: props.jwtToken
+            }
+            const response = await ApiServiceHelper.post('image/background_replace', data, header);
+            props.updateSpinFlag(false)
+            return response.url
+        } catch(error) {
+            props.updateSpinFlag(false)
+            message.error("Something went wrong. Please Try again leter!")
         }
-        const header = {
-            jwt_token: props.jwtToken
-        }
-        const response = await ApiServiceHelper.post('image/background_replace', data, header);
-        console.log(response)
-        return response.url
+        return props.imageUrl
     },
 
     handleAction: async (props) => {
-        console.log(props)
-        const data = {
-            image_url: props.imageUrl,
+        try {
+            props.updateSpinFlag(true)
+            const data = {
+                image_url: props.imageUrl,
+            }
+            const header = {
+                jwt_token: props.jwtToken
+            }
+            const response = await ApiServiceHelper.post('image/'+props.api_url, data, header);
+            props.updateSpinFlag(false)
+            return response.url
+        } catch(error) {
+            props.updateSpinFlag(false)
+            message.error("Something went wrong. Please Try again leter!")
         }
-        const header = {
-            jwt_token: props.jwtToken
-        }
-        const response = await ApiServiceHelper.post('image/'+props.api_url, data, header);
-        console.log(response)
-        return response.url
+        return props.imageUrl
     },
 
     handleSettings: async (props) => {
-        console.log(props)
-        const data = {
-            image_url: props.imageUrl,
-            factor: props.factor,
-            save: props.save,
-            revert: props.revert,
+        try {
+            props.updateSpinFlag(true)
+            const data = {
+                image_url: props.imageUrl,
+                factor: props.factor,
+                save: props.save,
+                revert: props.revert,
+            }
+            const header = {
+                jwt_token: props.jwtToken
+            }
+            const response = await ApiServiceHelper.post('image/'+props.slider_action, data, header);
+            props.updateSpinFlag(false)
+            return response.url
+        } catch(e) {
+            props.updateSpinFlag(false)
+            message.error("Something went wrong. Please Try again leter!")
         }
-        const header = {
-            jwt_token: props.jwtToken
-        }
-        const response = await ApiServiceHelper.post('image/'+props.slider_action, data, header);
-        console.log(response)
-        return response.url
+        return props.imageUrl
+        
     },
 
     getAllImages: async (props) => {
-        console.log(props)
-        const header = {
-            jwt_token: props.jwtToken
+        try {
+            const header = {
+                jwt_token: props.jwtToken
+            }
+            const response = await ApiServiceHelper.get('image/get_user_images', header);
+            console.log(response)
+            return response.url
+        } catch(e) {
+            message.error("Something went wrong. Please Try again leter!")
         }
-        const response = await ApiServiceHelper.get('image/get_user_images', header);
-        console.log(response)
-        return response.url
     }
 };
 

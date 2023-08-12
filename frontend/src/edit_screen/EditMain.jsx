@@ -51,6 +51,7 @@ class EditMain extends Component {
             show_slider: false,
             slider_action: null,
             contentHeight: 'auto',
+            spinning: false,
             // jwtToken: localStorage.getItem('jwtToken')
         };
 
@@ -74,7 +75,12 @@ class EditMain extends Component {
         this.setState({slider_action: action, show_slider: true});
     }
 
+    updateSpinFlag(flag) {
+        this.setState({ 'spinning': flag})
+    }
+
     setImageUrl = async (imageUrl, background = false) => {
+        this.updateSpinFlag(true)
         const base64_image = await ApiServiceHelper.blobToBase64(imageUrl)
         const data = {
             image: base64_image
@@ -83,6 +89,7 @@ class EditMain extends Component {
             jwt_token: this.state.jwtToken
         }
         const response = await ApiServiceHelper.post('image/upload', data, header);
+        this.updateSpinFlag(false)
         if(background){
             this.updateBackgroundImageToState(response.url)
         } else {
@@ -98,7 +105,11 @@ class EditMain extends Component {
 
     updateBackgroundImageToState = async (imageUrl) => {
         this.setState({ backgroundImageUrl: imageUrl }, async function() {
-            imageUrl = await ApiService.replaceBackground(this.state)
+            const data = {
+                ...this.state,
+                updateSpinFlag: this.updateSpinFlag.bind(this)
+            }
+            imageUrl = await ApiService.replaceBackground(data)
             this.updateImageToState(imageUrl)
         });
     }
@@ -154,6 +165,7 @@ class EditMain extends Component {
                     title="Upload Background" 
                     updateUploadModal={this.updateUploadModal.bind(this)} 
                     setImageUrl={this.setImageUrl.bind(this)} 
+                    updateSpinFlag={this.updateSpinFlag.bind(this)}
                 />
                 <ChooseModal 
                     choose_modal_open={this.state.choose_modal_open} 
@@ -162,6 +174,7 @@ class EditMain extends Component {
                     updateChooseModal={this.updateChooseModal.bind(this)} 
                     updateImageToState={this.updateImageToState.bind(this)} 
                 />
+                
                 <InsideHeader />
                 <Row id="content" style={{ minHeight: this.state.contentHeight, 
                                 position: 'relative',
@@ -176,7 +189,8 @@ class EditMain extends Component {
                             updateImageToState={this.updateImageToState.bind(this)}
                             updateUploadModal={this.updateUploadModal.bind(this)} 
                             updateChooseModal={this.updateChooseModal.bind(this)} 
-                            updateSliderAction={this.updateSliderAction.bind(this)}/>
+                            updateSliderAction={this.updateSliderAction.bind(this)}
+                            updateSpinFlag={this.updateSpinFlag.bind(this)}/>
                     </Col>
                     <Col span={18} style={imageStyle}>
                         {/* <EditSlider 
@@ -189,7 +203,8 @@ class EditMain extends Component {
                         {this.state.imageUrl ? (
                             <MainImage 
                                 imageUrl={this.state.imageUrl} 
-                                is_updated={this.state.is_updated}/>
+                                is_updated={this.state.is_updated}
+                                spinning={this.state.spinning}/>
                         ) : (
                             <UploadButton 
                                 setImageUrl={this.setImageUrl.bind(this)}
