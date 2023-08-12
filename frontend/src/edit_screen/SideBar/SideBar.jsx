@@ -199,6 +199,10 @@ class SideBar extends React.Component {
             imageUrl = await ApiService.handleAction(payload)
             this.props.updateImageToState(imageUrl)
         }
+        const actionList2 = ['10', '11', '12', '13', '14']
+        if(!actionList2.includes(data.key)){
+            this.props.updateSliderAction(null, false)
+        }
     }
 
     render() {

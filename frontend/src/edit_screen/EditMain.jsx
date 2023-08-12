@@ -71,8 +71,8 @@ class EditMain extends Component {
         this.setState({choose_modal_open: flag});
     }
 
-    updateSliderAction(action) {
-        this.setState({slider_action: action, show_slider: true});
+    updateSliderAction(action, flag=true) {
+        this.setState({slider_action: action, show_slider: flag});
     }
 
     updateSpinFlag(flag) {
@@ -149,7 +149,6 @@ class EditMain extends Component {
     };
 
     render() {
-        console.log(this.state)
         if (!this.state.jwtToken) {
             // Redirect to a different URL if the token is not present
             return <Navigate to="/" />;
@@ -200,6 +199,17 @@ class EditMain extends Component {
                             imageUrl={this.state.imageUrl}
                             updateImageToState={this.updateImageToState.bind(this)}
                         /> */}
+
+                        { this.state.imageUrl &&
+                            <EditSlider 
+                                show_slider={this.state.show_slider} 
+                                slider_action={this.state.slider_action}
+                                jwtToken={this.state.jwtToken} 
+                                imageUrl={this.state.imageUrl}
+                                updateImageToState={this.updateImageToState.bind(this)}
+                                updateSpinFlag={this.updateSpinFlag.bind(this)}
+                            />
+                        }
                         {this.state.imageUrl ? (
                             <MainImage 
                                 imageUrl={this.state.imageUrl} 
@@ -210,16 +220,6 @@ class EditMain extends Component {
                                 setImageUrl={this.setImageUrl.bind(this)}
                             />
                         )}
-
-                        { this.state.imageUrl &&
-                            <EditSlider 
-                                show_slider={this.state.show_slider} 
-                                slider_action={this.state.slider_action}
-                                jwtToken={this.state.jwtToken} 
-                                imageUrl={this.state.imageUrl}
-                                updateImageToState={this.updateImageToState.bind(this)}
-                            />
-                        }
                     </Col>
                 </Row>
                 <Footer className="sticky-footer" style={{ textAlign: 'center' }}>Copyright © Illustrix, 2023. All rights reserved.</Footer>
