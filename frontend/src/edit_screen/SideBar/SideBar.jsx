@@ -63,7 +63,7 @@ function getItem(
 }
 
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'];
-const defaultOpenKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'];
+const defaultOpenKeys = ['sub1', 'sub5'];
 
 
 class SideBar extends React.Component {
@@ -71,7 +71,7 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          openKeys: ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'],
+          openKeys: ['sub1', 'sub5'],
         };
     }
 
@@ -92,6 +92,31 @@ class SideBar extends React.Component {
       console.log(keys)
         
     }
+
+    forceDownload = (blob, filename) => {
+        var a = document.createElement('a');
+        a.download = filename;
+        a.href = blob;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+
+    downloadResource = (url, filename) => {
+        if (!filename) filename = url.split('\\').pop().split('/').pop();
+        fetch(url, {
+            headers: new Headers({
+              'Origin': window.location.origin
+            }),
+            mode: 'cors'
+          })
+          .then(response => response.blob())
+          .then(blob => {
+            let blobUrl = window.URL.createObjectURL(blob);
+            this.forceDownload(blobUrl, filename);
+          })
+          .catch(e => console.error(e));
+      }
 
     async handleClick(data){
         console.log(data)
@@ -159,6 +184,9 @@ class SideBar extends React.Component {
                 break;
             case '19':
                 this.props.updateChooseModal(true)
+                break;
+            case '20':
+                this.downloadResource(this.props.imageUrl);
                 break;
             
             default:
