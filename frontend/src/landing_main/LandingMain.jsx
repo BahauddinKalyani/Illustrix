@@ -5,7 +5,7 @@ import ParticleBG from '../particle_bg/ParticleBG';
 import LoginModal from '../modals/LoginModal';
 import SignupModal from '../modals/SignupModal';
 
-const { Content } = Layout;
+const { Content, Footer } = Layout;
 const { Title } = Typography;
 
 const heroImage = 'landing_hero.png'
@@ -74,6 +74,9 @@ class LandingMain extends React.Component {
             </Col>
             <Col span={12}>
                 <img src={heroImage} alt="Illistrix in action" style={imageStyle} className="hero-image" />
+            </Col>
+            <Col span={24}>
+                <Footer style={{ textAlign: 'center', background: 'transparent' }}>Copyright © Illustrix, 2023. All rights reserved.</Footer>
             </Col>
         </Row>
         )

@@ -3,40 +3,46 @@ import './sidebar.css'
 import React from 'react';
 import { Menu, MenuProps } from 'antd';
 import {
-    AppstoreOutlined,
-    MailOutlined,
+    FileImageOutlined,
+    BgColorsOutlined,
     SettingOutlined,
+    FunnelPlotOutlined,
+    FileOutlined,
 } from '@ant-design/icons';
 import ApiService from '../../helpers/ApiService';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items:  MenuItem[]  = [
-    getItem('Background', 'sub1', <MailOutlined />, [
+    getItem('File', 'sub5', <FileOutlined />, [
+        getItem('New Image', '18'),
+        getItem('Choose Image', '19'),
+        getItem('Save Image', '20'),
+        getItem('Delete Image', '17'),
+    ]),
+    getItem('Background', 'sub1', <BgColorsOutlined />, [
         getItem('Background Remove', '1'),
         getItem('Blur Background', '2'),
         getItem('Replace Background', '3'),
         // getItem('Reset Background', '4'),
     ]),
-    getItem('Enhancements', 'sub2', <AppstoreOutlined />, [
+    getItem('Enhancements', 'sub2', <FileImageOutlined />, [
         getItem('Image Super Resolutions', '5'),
     ]),
-    getItem('Transformations', 'sub3', <SettingOutlined />, [
+    getItem('Transformations', 'sub3', <FunnelPlotOutlined />, [
         getItem('Cartoon', '6'),
         getItem('Sketch', '7'),
-        getItem('Black & White', '8'),
+        getItem('Painting', '8'),
+        getItem('Black & White', '9'),
     ]),
     getItem('Adjustments', 'sub4', <SettingOutlined />, [
-        getItem('Change Brightness', '9'),
-        getItem('Adjust Contrast', '10'),
-        getItem('Change Hue', '11'),
-        getItem('Change Saturation', '12'),
-        getItem('Flip Image', '13'),
+        getItem('Change Brightness', '10'),
+        getItem('Adjust Contrast', '11'),
+        getItem('Change Hue', '12'),
+        getItem('Change Saturation', '13'),
         getItem('Adjust Sharpness', '14'),
-    ]),
-    getItem('File', 'sub5', <SettingOutlined />, [
-        getItem('Save Image', '15'),
-        getItem('Delete Image', '16'),
+        getItem('Flip Image Horizontally', '15'),
+        getItem('Flip Image Vertically', '16'),
     ]),
 ];
 
@@ -56,14 +62,16 @@ function getItem(
     };
 }
 
-const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'];
+const defaultOpenKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'];
+
 
 class SideBar extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-          openKeys: ['sub1'],
+          openKeys: ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'],
         };
     }
 
@@ -88,26 +96,82 @@ class SideBar extends React.Component {
     async handleClick(data){
         console.log(data)
         let imageUrl = ''
+        let payload = {}
+        let api_url = ''
         switch(data.key) {
             case '1':
-                imageUrl = await ApiService.removeBackground(this.props)
-                this.props.updateImageToState(imageUrl)
+                api_url = 'background_remove';
                 break;
             case '2':
-                imageUrl = await ApiService.blurrBackground(this.props)
-                this.props.updateImageToState(imageUrl)
+                api_url = 'background_blur';
                 break;
             case '3':
                 // imageUrl = await ApiService.blackAndWhite(this.props)
                 // this.props.updateImageToState(imageUrl)
                 this.props.updateUploadModal(true)
                 break;
+            case '5':
+                api_url = 'image_super_resolution';
+                break;
+            case '6':
+                api_url = 'cartoonification';
+                break;
+            case '7':
+                api_url = 'sketching';
+                break;
             case '8':
-                imageUrl = await ApiService.blackAndWhite(this.props)
+                api_url = 'painting';
+                payload = { ...this.props, 
+                    slider_action: api_url,
+                    factor: 3,
+                    save: 1,
+                    revert: 0,
+                }
+                imageUrl = await ApiService.handleSettings(payload)
                 this.props.updateImageToState(imageUrl)
                 break;
+            case '9':
+                api_url = 'black_and_white'
+                break;
+            case '10':
+                this.props.updateSliderAction('brightness')
+                break;
+            case '11':
+                this.props.updateSliderAction('contrast')
+                break;
+            case '12':
+                this.props.updateSliderAction('hue')
+                break;
+            case '13':
+                this.props.updateSliderAction('saturation')
+                break;
+            case '14':
+                this.props.updateSliderAction('sharpness')
+                break;
+            case '15':
+                api_url = 'flip_horizontally';
+                break;
+            case '16':
+                api_url = 'flip_vertically';
+                break;
+            case '18':
+                this.props.updateImageToState(null)
+                break;
+            case '19':
+                this.props.updateChooseModal(true)
+                break;
+            
             default:
                 break;
+        }
+
+        const actionList = ['1', '2', '5', '6', '7', '8', '9', '15', '16']        
+        if (actionList.includes(data.key)) {
+            payload = { ...this.props, 
+                api_url: api_url,
+            }
+            imageUrl = await ApiService.handleAction(payload)
+            this.props.updateImageToState(imageUrl)
         }
     }
 
@@ -121,6 +185,7 @@ class SideBar extends React.Component {
                     openKeys={this.state.openKeys}
                     onClick={this.handleClick.bind(this)}
                     onOpenChange={this.onOpenChange.bind(this)}
+                    defaultOpenKeys={this.defaultOpenKeys}
                 />
             </div>
         )

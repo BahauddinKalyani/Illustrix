@@ -1,5 +1,5 @@
 import React from 'react';
-import { Upload, Button, message, Typography } from 'antd';
+import { Upload, Button, message, Typography, Image } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 const { Title } = Typography;
 
