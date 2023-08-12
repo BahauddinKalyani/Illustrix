@@ -11,6 +11,7 @@ function LoginModal(props) {
             const response = await ApiServiceHelper.post('user/login', data);
             console.log(response)
             props.updateLoginModal(false)
+            localStorage.setItem('jwtToken', response.jwt);
             navigate('/edit', { state: response });
             message.success('Login Successful!');
         } catch (error) {

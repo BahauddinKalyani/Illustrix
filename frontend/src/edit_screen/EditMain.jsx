@@ -11,6 +11,7 @@ import UploadModal from '../modals/UploadModal';
 import ApiService from '../helpers/ApiService';
 import EditSlider from './EditSlider';
 import ChooseModal from '../modals/ChooseModal';
+import { Navigate  } from "react-router-dom";
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -43,15 +44,22 @@ class EditMain extends Component {
         this.state = {
             imageUrl: null,
             backgroundImageUrl: null,
-            jwtToken: this.props.location.state.jwt,
+            jwtToken: null,
             is_updated: true,
             upload_modal_open: false,
             choose_modal_open: false,
             show_slider: false,
             slider_action: null,
-
+            contentHeight: 'auto',
             // jwtToken: localStorage.getItem('jwtToken')
         };
+
+        // console.log(localStorage.getItem('jwtToken'))
+    }
+
+    updateLocalStorage() {
+        localStorage.setItem('jwtToken', this.state.jwtToken);
+        localStorage.setItem('imageUrl', this.state.imageUrl);
     }
 
     updateUploadModal(flag) {
@@ -85,7 +93,7 @@ class EditMain extends Component {
     };
 
     updateImageToState = (imageUrl) => {
-        this.setState({ imageUrl: imageUrl, is_updated:  Math.random() });
+        this.setState({ imageUrl: imageUrl, is_updated:  Math.random() }, this.updateLocalStorage.bind(this));
     }
 
     updateBackgroundImageToState = async (imageUrl) => {
@@ -95,7 +103,47 @@ class EditMain extends Component {
         });
     }
 
+    componentDidMount() {
+        this.handleResize();
+        window.addEventListener('resize', this.handleResize);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if(prevState.imageUrl == null && prevState.jwtToken == null) {
+            return {
+                'jwtToken': localStorage.getItem('jwtToken'),
+                'imageUrl': localStorage.getItem('imageUrl') 
+            };
+        }
+        return null;
+    }
+
+    handleResize = () => {
+        const windowHeight = window.innerHeight;
+        const content = document.getElementById('content');
+        let contentHeight = null;
+        if(content) {
+            contentHeight = content.clientHeight;
+        }
+    
+        if (contentHeight < windowHeight) {
+          this.setState({ contentHeight: `calc(100vh - 156px)` });
+        } else {
+          this.setState({ contentHeight: 'auto' });
+        }
+    };
+
     render() {
+        console.log(this.state)
+        if (!this.state.jwtToken) {
+            // Redirect to a different URL if the token is not present
+            return <Navigate to="/" />;
+        }
+
         return (
             <ConfigProvider 
                 theme={config}
@@ -115,7 +163,11 @@ class EditMain extends Component {
                     updateImageToState={this.updateImageToState.bind(this)} 
                 />
                 <InsideHeader />
-                <Row style={rowStyle}>
+                <Row id="content" style={{ minHeight: this.state.contentHeight, 
+                                position: 'relative',
+                                textAlign: 'center',
+                                verticalAlign: 'center',
+                                width: '100%', }}>
                     <Col span={6}>
                         <SideBar 
                             jwtToken={this.state.jwtToken} 
@@ -155,7 +207,7 @@ class EditMain extends Component {
                         }
                     </Col>
                 </Row>
-                <Footer style={{ textAlign: 'center' }}>Copyright © Illustrix, 2023. All rights reserved.</Footer>
+                <Footer className="sticky-footer" style={{ textAlign: 'center' }}>Copyright © Illustrix, 2023. All rights reserved.</Footer>
             </ConfigProvider>
         );
     }

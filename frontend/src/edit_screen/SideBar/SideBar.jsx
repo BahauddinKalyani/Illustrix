@@ -18,7 +18,6 @@ const items:  MenuItem[]  = [
         getItem('New Image', '18'),
         getItem('Choose Image', '19'),
         getItem('Save Image', '20'),
-        getItem('Delete Image', '17'),
     ]),
     getItem('Background', 'sub1', <BgColorsOutlined />, [
         getItem('Background Remove', '1'),
@@ -63,7 +62,6 @@ function getItem(
 }
 
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'];
-const defaultOpenKeys = ['sub1', 'sub5'];
 
 
 class SideBar extends React.Component {
@@ -71,7 +69,7 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          openKeys: ['sub1', 'sub5'],
+          openKeys: ['sub1', 'sub2', 'sub5'],
         };
     }
 
@@ -205,7 +203,7 @@ class SideBar extends React.Component {
 
     render() {
         return (
-            <div style={{ width: 256, marginTop: 15}}>
+            <div style={{ width: 256}}>
                 <Menu
                     mode="inline"
                     theme="dark"
@@ -213,7 +211,6 @@ class SideBar extends React.Component {
                     openKeys={this.state.openKeys}
                     onClick={this.handleClick.bind(this)}
                     onOpenChange={this.onOpenChange.bind(this)}
-                    defaultOpenKeys={this.defaultOpenKeys}
                 />
             </div>
         )
