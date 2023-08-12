@@ -59,3 +59,13 @@ def insert_or_update_user_image(file_name: str, email: str, url: str) -> None:
         image_object = Image(email = email, filename = file_name, url = url)
         image_object.validate()
         image_object.save()
+
+def get_user_images_by_email(email: str) -> list:
+    user_data = Image.objects(email = email)
+    user_images = []
+    for i in user_data:
+        user_images.append(i.url)
+    return user_images
+
+def update_user_detailsby_email(body: dict) -> None:
+    User.objects(email = body["email"]).update_one(set__first_name = body["first_name"], set__last_name = body["last_name"], set__password = body["password"])
