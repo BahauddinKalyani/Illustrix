@@ -9,7 +9,10 @@ const ApiServiceHelper = {
             const response = await axios.get(`${API_BASE_URL}/${endpoint}`, {headers, mode: 'no-cors', withCredentials: false});
             return response.data;
         } catch (error) {
-            console.error('Error:', error.message);
+            console.error('Error:', error.response.status);
+            if(error.response.status == 401){
+                window.location.href = "/"
+            }
             throw error;
         }
     },
@@ -22,6 +25,9 @@ const ApiServiceHelper = {
             return response.data;
         } catch (error) {
             console.error('Error:', error.message);
+            if(error.response.status == 401){
+                window.location.href = "/"
+            }
             throw error;
         }
     },

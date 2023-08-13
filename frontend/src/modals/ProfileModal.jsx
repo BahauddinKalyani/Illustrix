@@ -20,9 +20,7 @@ function ProfileModal(props) {
                         jwt_token: props.jwtToken
                     }
                     const response = await ApiServiceHelper.get('user/get_user_details', header);
-                    console.log(response)
                     delete response.message;
-                    console.log(response)
                     setUser(response)
                     setIsApiCalled(true)
                 } catch (error) {
@@ -40,8 +38,10 @@ function ProfileModal(props) {
                 jwt_token: props.jwtToken
             }
             const response = await ApiServiceHelper.post('user/update_user_details', data, header);
-            console.log('POST response:', response);
             delete response.message;
+            if(data.password !== user.password){
+                window.location.href = "/"
+            }
             setUser(response)
             props.updateProfileModal(false)
             message.success('Update Successful!');
@@ -101,7 +101,7 @@ function ProfileModal(props) {
             ]}
             initialValue={user.email}
           >
-            <Input />
+            <Input disabled={true} style={{color: '#fff'}} />
           </Form.Item>
           <Form.Item
             name="password"
