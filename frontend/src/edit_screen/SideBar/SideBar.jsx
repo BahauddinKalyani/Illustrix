@@ -1,7 +1,7 @@
 import 'antd/dist/reset.css';
 import './sidebar.css'
 import React from 'react';
-import { Menu, MenuProps } from 'antd';
+import { Menu, MenuProps, message } from 'antd';
 import {
     FileImageOutlined,
     BgColorsOutlined,
@@ -17,7 +17,7 @@ const items:  MenuItem[]  = [
     getItem('File', 'sub5', <FileOutlined />, [
         getItem('New Image', '18'),
         getItem('Choose Image', '19'),
-        getItem('Save Image', '20'),
+        getItem('Download Image', '20'),
     ]),
     getItem('Background', 'sub1', <BgColorsOutlined />, [
         getItem('Background Remove', '1'),
@@ -101,6 +101,10 @@ class SideBar extends React.Component {
       }
 
     downloadResource = (url, filename) => {
+        if(!url){
+            message.error("Please select an image first to download!")
+            return
+        }
         if (!filename) filename = url.split('\\').pop().split('/').pop();
         fetch(url, {
             headers: new Headers({

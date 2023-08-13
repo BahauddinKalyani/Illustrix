@@ -11,6 +11,7 @@ import UploadModal from '../modals/UploadModal';
 import ApiService from '../helpers/ApiService';
 import EditSlider from './EditSlider';
 import ChooseModal from '../modals/ChooseModal';
+import ProfileModal from '../modals/ProfileModal';
 import { Navigate  } from "react-router-dom";
 
 
@@ -48,6 +49,7 @@ class EditMain extends Component {
             is_updated: true,
             upload_modal_open: false,
             choose_modal_open: false,
+            profile_modal_open: false,
             show_slider: false,
             slider_action: null,
             contentHeight: 'auto',
@@ -69,6 +71,10 @@ class EditMain extends Component {
 
     updateChooseModal(flag) {
         this.setState({choose_modal_open: flag});
+    }
+
+    updateProfileModal(flag) {
+        this.setState({profile_modal_open: flag});
     }
 
     updateSliderAction(action, flag=true) {
@@ -173,8 +179,14 @@ class EditMain extends Component {
                     updateChooseModal={this.updateChooseModal.bind(this)} 
                     updateImageToState={this.updateImageToState.bind(this)} 
                 />
+                <ProfileModal 
+                    profile_modal_open={this.state.profile_modal_open} 
+                    jwtToken={this.state.jwtToken} 
+                    title="Update Profile" 
+                    updateProfileModal={this.updateProfileModal.bind(this)} 
+                />
                 
-                <InsideHeader />
+                <InsideHeader updateProfileModal={this.updateProfileModal.bind(this)} />
                 <Row id="content" style={{ minHeight: this.state.contentHeight, 
                                 position: 'relative',
                                 textAlign: 'center',

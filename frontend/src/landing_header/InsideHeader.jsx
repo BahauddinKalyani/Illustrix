@@ -17,16 +17,13 @@ const imageStyle = {
     width: '80px',
 }
 
-function InsideHeader() {
+function InsideHeader({updateProfileModal}) {
+
     return (
         <Header style={headerStyle}>
             <a href="/"><img style={imageStyle} src='logo-clr-sm.png' alt='logo'></img></a>
-            {/* <Button style={buttonStyle} type='deafult'>Sign up</Button> */}
-            {/* <Button style={buttonStyle} type='deafult'>Contact us</Button>
-            <Button style={buttonStyle} type='deafult'>Documents</Button> */}
             <Button href="/" style={buttonStyle} type='deafult'>Logout</Button>
-            <Button style={buttonStyle} type='deafult'>Profile</Button>
-            {/* <Button style={buttonStyle} type='primary'>Login</Button> */}
+            <Button onClick={() => updateProfileModal(true)} style={buttonStyle} type='deafult'>Profile</Button>
         </Header>  
     );
 }
