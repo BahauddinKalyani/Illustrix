@@ -1,11 +1,12 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Slider, Row, Col } from 'antd';
 import ApiService from '../helpers/ApiService';
 
 const EditSlider = (props) => {
   
-    const [sliderValue, setSliderValue] = useState(50);
+    const [sliderValue, setSliderValue] = useState(1);
+    const [prevSliderAction, setAction] = useState(props.slider_action);
     
 
     const handleSettings = async (props, value, save, revert) => {
@@ -16,41 +17,29 @@ const EditSlider = (props) => {
         }
         let imageUrl = await ApiService.handleSettings(data)
         props.updateImageToState(imageUrl)
-    }
+    };
+
+    useEffect(() => {
+
+        if(prevSliderAction !== props.slider_action) {
+            setSliderValue(1)
+        }
+        setAction(props.slider_action);
+  }, [props.slider_action]);
   
     const handleSliderChange = async (value) => {
-        value = value/1000
         setSliderValue(value)
+        value = value/1000
         handleSettings(props, value, 0, 0)
-        // switch(props.slider_action) {
-        //     case 'brightness':
-        //         handleBrightness
-        //         break;
-        //     default:
-        //         break;
-        // }
     };
   
     const handleSave = async () => {
         handleSettings(props, sliderValue,1, 0)
-        // switch(props.slider_action) {
-        //     case 'brightness':
-        //         handleBrightness
-        //         break;
-        //     default:
-        //         break;
-        // }
     };
   
     const handleRevert = async () => {
         handleSettings(props, sliderValue, 0, 1)
-        // switch(props.slider_action) {
-        //     case 'brightness':
-        //         handleBrightness
-        //         break;
-        //     default:
-        //         break;
-        // }
+        setSliderValue(1)
     };
 
   return (
@@ -59,8 +48,8 @@ const EditSlider = (props) => {
         <Col span={6}></Col>
         <Col span={6}>
             <Slider min={1}
-                max={5000} 
-                defaultValue={1}
+                max={5000}
+                value={sliderValue}
                 onAfterChange={handleSliderChange}
             />
         </Col>

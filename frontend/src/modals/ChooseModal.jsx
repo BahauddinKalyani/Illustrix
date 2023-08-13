@@ -9,24 +9,28 @@ function ChooseModal(props) {
         props.updateChooseModal(false)
     };
     const [images, setImages] = useState(null);
+    const [isApiCalled, setIsApiCalled] = useState(false);
 
     useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const urls = await ApiService.getAllImages(props);
-            let data = []
-            urls.forEach((url) => {
-                data.push({src: url})
-            });
-            console.log(data)
-            setImages(data);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-    
-        fetchData();
-        }, []);
+        if(!isApiCalled) {
+            const fetchData = async () => {
+                try {
+                    const urls = await ApiService.getAllImages(props);
+                    let data = []
+                    urls.forEach((url) => {
+                        data.push({src: url})
+                    });
+                    console.log(data)
+                    setImages(data);
+                    setIsApiCalled(true)
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            };
+            fetchData();
+        }
+        
+    }, []);
   
   return (
     <>

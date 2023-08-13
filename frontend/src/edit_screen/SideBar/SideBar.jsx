@@ -1,7 +1,7 @@
 import 'antd/dist/reset.css';
 import './sidebar.css'
 import React from 'react';
-import { Menu, MenuProps } from 'antd';
+import { Menu, MenuProps, message } from 'antd';
 import {
     FileImageOutlined,
     BgColorsOutlined,
@@ -17,8 +17,7 @@ const items:  MenuItem[]  = [
     getItem('File', 'sub5', <FileOutlined />, [
         getItem('New Image', '18'),
         getItem('Choose Image', '19'),
-        getItem('Save Image', '20'),
-        getItem('Delete Image', '17'),
+        getItem('Download Image', '20'),
     ]),
     getItem('Background', 'sub1', <BgColorsOutlined />, [
         getItem('Background Remove', '1'),
@@ -63,7 +62,6 @@ function getItem(
 }
 
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'];
-const defaultOpenKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'];
 
 
 class SideBar extends React.Component {
@@ -71,7 +69,7 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          openKeys: ['sub1', 'sub2', 'sub3', 'sub4', 'sub5'],
+          openKeys: ['sub1', 'sub2', 'sub5'],
         };
     }
 
@@ -92,6 +90,35 @@ class SideBar extends React.Component {
       console.log(keys)
         
     }
+
+    forceDownload = (blob, filename) => {
+        var a = document.createElement('a');
+        a.download = filename;
+        a.href = blob;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+
+    downloadResource = (url, filename) => {
+        if(!url){
+            message.error("Please select an image first to download!")
+            return
+        }
+        if (!filename) filename = url.split('\\').pop().split('/').pop();
+        fetch(url, {
+            headers: new Headers({
+              'Origin': window.location.origin
+            }),
+            mode: 'cors'
+          })
+          .then(response => response.blob())
+          .then(blob => {
+            let blobUrl = window.URL.createObjectURL(blob);
+            this.forceDownload(blobUrl, filename);
+          })
+          .catch(e => console.error(e));
+      }
 
     async handleClick(data){
         console.log(data)
@@ -160,6 +187,9 @@ class SideBar extends React.Component {
             case '19':
                 this.props.updateChooseModal(true)
                 break;
+            case '20':
+                this.downloadResource(this.props.imageUrl);
+                break;
             
             default:
                 break;
@@ -173,11 +203,15 @@ class SideBar extends React.Component {
             imageUrl = await ApiService.handleAction(payload)
             this.props.updateImageToState(imageUrl)
         }
+        const actionList2 = ['10', '11', '12', '13', '14']
+        if(!actionList2.includes(data.key)){
+            this.props.updateSliderAction(null, false)
+        }
     }
 
     render() {
         return (
-            <div style={{ width: 256, marginTop: 15}}>
+            <div style={{ width: 256}}>
                 <Menu
                     mode="inline"
                     theme="dark"
@@ -185,7 +219,6 @@ class SideBar extends React.Component {
                     openKeys={this.state.openKeys}
                     onClick={this.handleClick.bind(this)}
                     onOpenChange={this.onOpenChange.bind(this)}
-                    defaultOpenKeys={this.defaultOpenKeys}
                 />
             </div>
         )
