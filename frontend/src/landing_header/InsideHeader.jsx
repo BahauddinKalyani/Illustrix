@@ -21,7 +21,7 @@ function InsideHeader({updateProfileModal}) {
 
     return (
         <Header style={headerStyle}>
-            <a href="/"><img style={imageStyle} src='logo-clr-sm.png' alt='logo'></img></a>
+            <a><img style={imageStyle} src='logo-clr-sm.png' alt='logo'></img></a>
             <Button href="/" style={buttonStyle} type='deafult'>Logout</Button>
             <Button onClick={() => updateProfileModal(true)} style={buttonStyle} type='deafult'>Profile</Button>
         </Header>  
