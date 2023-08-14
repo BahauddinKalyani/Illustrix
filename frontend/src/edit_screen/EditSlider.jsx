@@ -34,11 +34,13 @@ const EditSlider = (props) => {
     };
   
     const handleSave = async () => {
-        handleSettings(props, sliderValue,1, 0)
+        const value = sliderValue/1000
+        handleSettings(props, value,1, 0)
     };
   
     const handleRevert = async () => {
-        handleSettings(props, sliderValue, 0, 1)
+        const value = sliderValue/1000
+        handleSettings(props, value, 0, 1)
         setSliderValue(1)
     };
 
